@@ -25,7 +25,7 @@ function Initialize-Project {
     $remote = git remote
 
     if ($remote) {
-        Write-Host "⚠ Ya existe un remoto:"
+        Write-Host "Ya existe un remoto:"
         git remote -v
         Pop-Location
         return

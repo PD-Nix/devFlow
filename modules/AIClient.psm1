@@ -43,7 +43,7 @@ Analiza y responde:
         )
     } | ConvertTo-Json -Depth 10
 
-    $url = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=$apiKey"
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$apiKey"
 
     try {
         $response = Invoke-RestMethod `

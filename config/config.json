@@ -3,6 +3,6 @@
   "autoCommit": true,
   "autoPush": true,
   "aiEnabled": true,
-  "aiprovider": "Google Gemini",
+  "aiprovider": "models/gemini-2.5-flash",
   "logPath": "./data/logs"
 }
