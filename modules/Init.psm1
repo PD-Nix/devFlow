@@ -16,9 +16,9 @@ function Initialize-Project {
     # 1. Git init
     if (!(Test-Path ".git")) {
         git init
-        Write-Host "✔ Git inicializado"
+        Write-Host "Git inicializado"
     } else {
-        Write-Host "✔ Git ya existe"
+        Write-Host "Git ya existe"
     }
 
     # 2. Verificar remoto
@@ -48,10 +48,10 @@ function Initialize-Project {
     # 3. Crear repo
     try {
         $repoUrl = New-GitHubRepo -repoName $repoName
-        Write-Host "✔ Repo creado: $repoUrl"
+        Write-Host "Repo creado: $repoUrl"
     }
     catch {
-        Write-Host "❌ Error creando repo en GitHub"
+        Write-Host "Error creando repo en GitHub"
         Pop-Location
         return
     }
@@ -65,19 +65,19 @@ function Initialize-Project {
     if ($status) {
         git add .
         git commit -m "Initial commit DevFlow"
-        Write-Host "✔ Commit inicial creado"
+        Write-Host "Commit inicial creado"
     } else {
-        Write-Host "⚠ No hay cambios para commit"
+        Write-Host "No hay cambios para commit"
     }
 
     # 6. Push
     try {
         git branch -M main
         git push -u origin main
-        Write-Host "🚀 Proyecto subido a GitHub"
+        Write-Host " Proyecto subido a GitHub"
     }
     catch {
-        Write-Host "❌ Error en push"
+        Write-Host " Error en push"
     }
 
     Pop-Location
