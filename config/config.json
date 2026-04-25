@@ -1,0 +1,8 @@
+{
+  "projectsPath": "C:\\Dev",
+  "autoCommit": true,
+  "autoPush": true,
+  "aiEnabled": true,
+  "aiprovider": "Google Gemini",
+  "logPath": "./data/logs"
+}
