@@ -40,22 +40,35 @@ function Sync-Git {
     param($path)
 
     Push-Location $path
-    try {
-        git add .
-    } catch {
-        throw "Error adding files to git: $_"
+
+    git add .
+
+    # evitar commit vacío
+    $status = git status --porcelain
+    if (-not $status) {
+        Write-Host "No hay cambios para commit"
+        Pop-Location
+        return
     }
-    try {
-        git commit -m "Auto commit DevFlow"
-    } catch {
-        throw "Error committing to git: $_"
+
+    git commit -m "Auto commit DevFlow"
+
+    # verificar si existe remoto
+    $remote = git remote
+
+    if (-not $remote) {
+        Write-Host "No hay remoto configurado"
+        Write-Host "Configura uno con:"
+        Write-Host "git remote add origin https://github.com/USUARIO/$((Split-Path -Leaf $path)).git"
     }
-    try {
-        git push
-    } catch {
-        throw "Error pushing to git: $_"
+    else {
+        try {
+            git push
+        } catch {
+            git push -u origin main
+        }
     }
+
     Pop-Location
 }
-
 Export-ModuleMember -Function Get-GitStatus, Get-GitDiff, Get-ChangedFiles, Sync-Git

@@ -1,0 +1,7 @@
+
+[2026-04-25]
+Cambios:
+ M devflow.ps1  M modules/GitManager.psm1 ?? modules/GithubClient.psm1 ?? modules/Init.psm1
+
+Sugerencias IA:
+Error IA: Error en el servidor remoto: (404) No se encontró.

@@ -8,6 +8,7 @@ Import-Module "$PSScriptRoot\modules\Logger.psm1"
 Import-Module "$PSScriptRoot\modules\AIClient.psm1"
 Import-Module "$PSScriptRoot\modules\ProjectScanner.psm1"
 Import-Module "$PSScriptRoot\modules\Analyzer.psm1"
+Import-Module "$PSScriptRoot\modules\Init.psm1"
 
 
 switch ($command) {
@@ -15,5 +16,6 @@ switch ($command) {
     "analyze" { Invoke-ProjectAnalysis -ProjectName $project }
     "sync"    { Sync-Project -ProjectName $project }
     "coach"   { Get-CoachRecommendation }
+    "init"    { Initialize-Project -ProjectName $project }
     default   { Write-Host "Comando no válido" }
 }
