@@ -24,18 +24,22 @@ function Write-Log {
     }
 
     # Si existe, cargar y agregar
-    if (Test-Path $logFile) {
-        $existing = Get-Content $logFile -Raw | ConvertFrom-Json
-        # Forzar array
-        if ($existing -isnot [System.Collections.IEnumerable]) {
-            $existing = @($existing)
-        }
-        $existing += $entry
-    } else {
-        $existing = @($entry)
+  if (Test-Path $logFile) {
+    $existing = Get-Content $logFile -Raw | ConvertFrom-Json
+
+    #  FORZAR ARRAY SIEMPRE
+    if ($null -eq $existing) {
+        $existing = @()
+    }
+    elseif ($existing.GetType().Name -ne "Object[]") {
+        $existing = @($existing)
     }
 
-    $existing | ConvertTo-Json -Depth 5 | Set-Content $logFile
+    $existing += $entry
+}
+else {
+    $existing = @($entry)
+}
 }
 
 function Get-Log {

@@ -23,9 +23,9 @@ function Invoke-ProjectAnalysis {
     $files = Get-ChangedFiles -path $path
 
     # Filtrar archivos importantes
-    $important = $files | Where-Object {
+    $important = ($files -split "`n") | Where-Object {
         $_ -match "\.(js|ts|py|ps1|cs|java|cpp)$"
-    }
+    } | Where-Object { $_ }
 
     if (-not $important) {
         Write-Host "No hay archivos relevantes"
@@ -33,7 +33,7 @@ function Invoke-ProjectAnalysis {
     }
 
     # Construir diff inteligente
-    $diffs = ""
+    $diffs = New-Object System.Collections.ArrayList
 
     Push-Location $path
 
@@ -44,13 +44,22 @@ function Invoke-ProjectAnalysis {
             $fileDiff = $fileDiff.Substring(0,1000)
         }
 
-        $diffs += "`n--- $file ---`n$fileDiff"
+        [void]$diffs.Add("`n--- $file ---`n$fileDiff")
     }
 
     Pop-Location
 
+    $diffs = $diffs -join ""
+    Write-Host "Llamando IA..."
+
     $ai = Get-AISuggestions -diff $diffs -projectName $ProjectName -files $important
 
+    Write-Host "Respuesta IA recibida:"
+    Write-Host $ai
+    
+
+    Write-Host "Type of important: $($important.GetType().FullName)"
+    Write-Host "Important: $important"
     $summary = "Cambios en: " + ($important -join ", ")
     Write-Host "$summary`n`nSugerencias IA:`n$ai"
     Write-Log `

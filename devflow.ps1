@@ -3,12 +3,12 @@ param(
     [string]$project
 )
 
-Import-Module "$PSScriptRoot\modules\GitManager.psm1"
-Import-Module "$PSScriptRoot\modules\Logger.psm1"
-Import-Module "$PSScriptRoot\modules\AIClient.psm1"
-Import-Module "$PSScriptRoot\modules\ProjectScanner.psm1"
-Import-Module "$PSScriptRoot\modules\Analyzer.psm1"
-Import-Module "$PSScriptRoot\modules\Init.psm1"
+Import-Module "$PSScriptRoot\modules\GitManager.psm1" -Force
+Import-Module "$PSScriptRoot\modules\Logger.psm1" -Force
+Import-Module "$PSScriptRoot\modules\AIClient.psm1" -Force
+Import-Module "$PSScriptRoot\modules\ProjectScanner.psm1" -Force
+Import-Module "$PSScriptRoot\modules\Analyzer.psm1" -Force
+Import-Module "$PSScriptRoot\modules\Init.psm1" -Force
 
 function Show-Menu {
     Write-Host "`n=== DEVFLOW ==="
@@ -30,5 +30,5 @@ switch ($command) {
     "log"   { Get-Log -project $project }
     "logai" { Get-LogAI -project $project }
     "menu" { Show-Menu }
-    default   { Write-Host "Comando no válido" Show-Menu }
+    default   { Write-Host "Comando no válido";Show-Menu }
 }
