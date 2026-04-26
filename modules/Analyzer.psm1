@@ -51,11 +51,15 @@ function Invoke-ProjectAnalysis {
 
     $ai = Get-AISuggestions -diff $diffs -projectName $ProjectName -files $important
 
-    $log = "Cambios:`n$status`n`nSugerencias IA:`n$ai"
+    $summary = "Cambios en: " + ($important -join ", ")
+    Write-Host "$summary`n`nSugerencias IA:`n$ai"
+    Write-Log `
+        -project $ProjectName `
+        -files $important `
+        -summary $summary `
+        -ai $ai
 
-    Write-Log -project $ProjectName -content $log
-
-    Write-Host $log
+    
 }
 
 function Sync-Project {
