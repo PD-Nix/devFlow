@@ -9,6 +9,7 @@ Import-Module "$PSScriptRoot\modules\AIClient.psm1" -Force
 Import-Module "$PSScriptRoot\modules\ProjectScanner.psm1" -Force
 Import-Module "$PSScriptRoot\modules\Analyzer.psm1" -Force
 Import-Module "$PSScriptRoot\modules\Init.psm1" -Force
+Import-Module "$PSScriptRoot/modules/TestRunner.psm1"
 
 function Show-Menu {
     Write-Host "`n=== DEVFLOW ==="
@@ -18,6 +19,8 @@ function Show-Menu {
     Write-Host "df init <name>      -> crear repo GitHub"
     Write-Host "df log <name>       -> ver historial"
     Write-Host "df logai <name>     -> resumen con IA"
+    Write-Host "df test <name>      -> ejecutar tests relacionados"
+    Write-Host "df menu             -> mostrar este menú"
     Write-Host ""
 }
 
@@ -25,10 +28,10 @@ switch ($command) {
     "scan"    { Get-Projects }
     "analyze" { Invoke-ProjectAnalysis -ProjectName $project }
     "sync"    { Sync-Project -ProjectName $project }
-    "coach"   { Get-CoachRecommendation }
     "init"    { Initialize-Project -ProjectName $project }
     "log"   { Get-Log -project $project }
     "logai" { Get-LogAI -project $project }
+    "test" { Invoke-SmartTestRunner -ProjectName $project }
     "menu" { Show-Menu }
     default   { Write-Host "Comando no válido";Show-Menu }
 }
