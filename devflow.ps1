@@ -10,6 +10,10 @@ Import-Module "$PSScriptRoot\modules\ProjectScanner.psm1" -Force
 Import-Module "$PSScriptRoot\modules\Analyzer.psm1" -Force
 Import-Module "$PSScriptRoot\modules\Init.psm1" -Force
 Import-Module "$PSScriptRoot/modules/TestRunner.psm1"
+Import-Module "$PSScriptRoot/modules/Structure.psm1"
+Import-Module "$PSScriptRoot/modules/Stale.psm1"
+Import-Module "$PSScriptRoot/modules/Snapshot.psm1"
+Import-Module "$PSScriptRoot/modules/Scaffold.psm1"
 
 function Show-Menu {
     Write-Host "`n=== DEVFLOW ==="
@@ -21,6 +25,11 @@ function Show-Menu {
     Write-Host "df logai <name>     -> resumen con IA"
     Write-Host "df test <name>      -> ejecutar tests relacionados"
     Write-Host "df menu             -> mostrar este menú"
+    Write-Host "df snapshot <name>  -> crear snapshot"
+    Write-Host "df diffsnap <name>   -> comparar con snapshot"
+    Write-Host "df structure <name>  -> mostrar estructura de proyecto"
+    Write-Host "df stale            -> proyectos sin cambios recientes"
+    Write-Host "df scaffold <name> <file>  -> crear proyecto desde estructura"
     Write-Host ""
 }
 
@@ -32,6 +41,11 @@ switch ($command) {
     "log"   { Get-Log -project $project }
     "logai" { Get-LogAI -project $project }
     "test" { Invoke-SmartTestRunner -ProjectName $project }
+    "structure" { Show-ProjectStructure -ProjectName $project }
+    "stale"     { Get-StaleProjects }
+    "snapshot"  { New-Snapshot -ProjectName $project }
+    "diffsnap"  { Compare-Snapshot -ProjectName $project }
+    "scaffold"  { New-ProjectFromStructure -ProjectName $project -FilePath $args[0] }
     "menu" { Show-Menu }
     default   { Write-Host "Comando no válido";Show-Menu }
 }
