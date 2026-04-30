@@ -51,7 +51,27 @@ function Initialize-Project {
         Write-Host "Repo creado: $repoUrl"
     }
     catch {
-        Write-Host "Error creando repo en GitHub"
+        Write-Host "`n❌ Error creando repo en GitHub`n"
+
+        # Status code
+        if ($_.Exception.Response) {
+            $status = $_.Exception.Response.StatusCode.value__
+            Write-Host "Código HTTP: $status"
+
+            # Leer body real
+            if ($_.Exception.Response -and $_.Exception.Response.Content) {
+            $body = $_.Exception.Response.Content.ReadAsStringAsync().Result
+            Write-Host "`nDetalle:"
+            Write-Host $body
+}
+
+            Write-Host "`nDetalle:"
+            Write-Host $body
+        }
+        else {
+            Write-Host $_
+        }
+
         Pop-Location
         return
     }
@@ -74,6 +94,11 @@ function Initialize-Project {
     try {
         git branch -M main
         git push -u origin main
+        if($LASTEXITCODE -eq 0){
+            Write-host "✅ Proyecto inicializado y subido a GitHub"
+        }else {
+            Write-host "⚠️ Fallo el push"
+        }
         Write-Host " Proyecto subido a GitHub"
     }
     catch {

@@ -3,7 +3,7 @@ function New-GitHubRepo {
         [string]$repoName
     )
 
-    $token = $env:GITHUB_TOKEN
+    $token = $env:GITHUBTOKEN
 
     if (-not $token) {
         throw "No hay GITHUB_TOKEN configurado"
