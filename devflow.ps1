@@ -14,7 +14,7 @@ Import-Module "$PSScriptRoot/modules/Structure.psm1"
 Import-Module "$PSScriptRoot/modules/Stale.psm1"
 Import-Module "$PSScriptRoot/modules/Snapshot.psm1"
 Import-Module "$PSScriptRoot/modules/Scaffold.psm1"
-
+Import-Module "$PSScriptRoot/modules/FastTravel.psm1"
 function Show-Menu {
     Write-Host "`n=== DEVFLOW ==="
     Write-Host "df scan             -> listar proyectos"
@@ -30,6 +30,8 @@ function Show-Menu {
     Write-Host "df structure <name>  -> mostrar estructura de proyecto"
     Write-Host "df stale            -> proyectos sin cambios recientes"
     Write-Host "df scaffold <name> <file>  -> crear proyecto desde estructura"
+    Write-Host "df ftt <name>  -> ir rápido a proyecto"
+    Write-Host "=================`n"
     Write-Host ""
 }
 
@@ -46,6 +48,7 @@ switch ($command) {
     "snapshot"  { New-Snapshot -ProjectName $project }
     "diffsnap"  { Compare-Snapshot -ProjectName $project }
     "scaffold"  { New-ProjectFromStructure -ProjectName $project -FilePath $args[0] }
+    "ftt" { ftt -name $project }
     "menu" { Show-Menu }
     default   { Write-Host "Comando no válido";Show-Menu }
 }
